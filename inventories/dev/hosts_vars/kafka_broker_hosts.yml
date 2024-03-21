@@ -1,0 +1,7 @@
+---
+kafka_broker_user: custom-user
+kafka_broker_group: custom-group
+kafka_broker_log_dir: /var/log/kafka
+kafka_broker_custom_properties:
+  log.dirs: "dir1,dir2"
+  confluent.balancer.enable: "true"

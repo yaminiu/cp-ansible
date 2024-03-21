@@ -1,0 +1,14 @@
+---
+kafka_connect_user: custom-user
+kafka_connect_group: custom-group
+kafka_connect_plugins_path:
+  - /usr/share/java/connect_plugins
+  - /my/connectors/dir
+kafka_connect_confluent_hub_plugins:
+  - jcustenborder/kafka-connect-spooldir:2.0.43
+kafka_connect_plugins:
+  - local/path/to/connect_archive.zip
+kafka_connect_plugins_remote:
+  - http://myhost.com/connect_archive.zip
+kafka_connect_secret_registry_key: <your own key>
+kafka_connect_secret_registry_enabled: false

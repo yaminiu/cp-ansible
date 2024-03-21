@@ -1,0 +1,48 @@
+---
+ansible_connection: ssh
+ansible_user: ec2-user
+ansible_become: true
+ansible_ssh_private_key_file: /tmp/certs/ssh_priv.pem
+proxy_env:
+  http_proxy: http://proxy.example.com:8080
+  https_proxy: https://proxy.example.com:8080
+  no_proxy: http://10.198.0.0:8080
+sasl_protocol: scram
+ssl_enabled: true
+ssl_custom_certs: true
+ssl_custom_certs_remote_src: true
+ssl_ca_cert_filepath: "/tmp/certs/ca.crt"
+ssl_signed_cert_filepath: "/tmp/certs/{{inventory_hostname}}-signed.crt"
+ssl_key_filepath: "/tmp/certs/{{inventory_hostname}}-key.pem"
+ssl_keystore_and_truststore_custom_password: true
+ssl_truststore_password: <mytruststorecustompassword>
+ssl_keystore_store_password: <mykeystorecustompassword>
+regenerate_ca: false
+regenerate_keystore_and_truststore: false
+jmxexporter_enabled: true
+jmxexporter_jar_url: http://<internal-server>/jmx_prometheus_javaagent-0.12.0.jar
+jmxexporter_url_remote: false
+repository_configuration: custom
+custom_yum_repofile_filepath: /tmp/my-repo.repo
+confluent_server_enabled: false
+kafka_broker_configure_multiple_listeners: false
+kafka_broker_custom_listeners:
+  broker:
+    name: BROKER
+    port: 9091
+    ssl_enabled: false
+    ssl_mutual_auth_enabled: false
+    sasl_protocol: none
+  internal:
+    name: INTERNAL
+    port: 9092
+    ssl_enabled: true
+    ssl_mutual_auth_enabled: false
+    sasl_protocol: scram
+rbac_enabled: true
+telemetry_enabled: false
+telemetry_api_key: XXXXXX
+telemetry_api_secret: YYYYYYYYY
+zookeeper_custom_properties:
+  initLimit: 6
+  syncLimit: 3

@@ -1,0 +1,3 @@
+---
+zookeeper_user: custom-user
+zookeeper_group: custom-group
