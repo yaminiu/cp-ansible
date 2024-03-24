@@ -1,4 +1,6 @@
 ---
+## Check hash_behaviour=merge in ansible.cfg defult section
+
 - name: Confirm Hash Merging Enabled
   assert:
     that: lookup('config', 'DEFAULT_HASH_BEHAVIOUR') == 'merge'
@@ -16,7 +18,7 @@
   tags:
     - validate
     - validate_ansi_version
-
+## checks the presence of both a kafka_controller and Zookeeper in the inventory and fails the task if both are found
 - name: Check the presence of Controller and Zookeeper
   fail:
     msg:  "Providing Zookeeper and Controller both are not supported at this time. Please remove one of these from your inventory"
@@ -25,6 +27,7 @@
     - ('zookeeper' in groups.keys() and groups['zookeeper'] | length > 0) | bool
     - not kraft_migration | bool
 
+## optimizes the facts gathering process by only collecting the specific subsets of information needed for the playbook
 - name: Gather OS Facts
   setup:
     gather_subset:
@@ -35,17 +38,21 @@
       - hardware
   tags: always
 
+## ensure python3 was installed and version is 3.6 or later
 - name: Verify Python version
   assert:
     that:
+      - "ansible_python_version is defined"
       - "ansible_python_version is version('3.6', '>=')"
     fail_msg: >-
-      Selected python version: {{ansible_python_version}}, You must upgrade Python to at least 3.6 to use these playbooks
+      Python version information is not available or does not meet the requirement.
+      Please ensure Python 3.6 or higher is installed to use these playbooks.
   tags:
     - validate
     - validate_python_version
     - notest
 
+## install java based on OS family
 - name: Red Hat Repo Setup and Java Installation
   include_tasks: redhat.yml
   when: ansible_os_family == "RedHat"
@@ -58,7 +65,8 @@
   include_tasks: debian.yml
   when: ansible_distribution == "Debian"
 
-- name: Config Validations
+## validate configuration when validate_hosts = true
+- name: Config Validations 
   include_tasks: config_validations.yml
   when: validate_hosts|bool
   tags:

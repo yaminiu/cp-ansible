@@ -3,6 +3,7 @@ ansible_connection: ssh
 ansible_user: ec2-user
 ansible_become: true
 ansible_ssh_private_key_file: /tmp/certs/ssh_priv.pem
+validate_hosts: true
 proxy_env:
   http_proxy: http://proxy.example.com:8080
   https_proxy: https://proxy.example.com:8080
@@ -23,6 +24,7 @@ jmxexporter_enabled: true
 jmxexporter_jar_url: http://<internal-server>/jmx_prometheus_javaagent-0.12.0.jar
 jmxexporter_url_remote: false
 repository_configuration: custom
+installation_method: package
 custom_yum_repofile_filepath: /tmp/my-repo.repo
 confluent_server_enabled: false
 kafka_broker_configure_multiple_listeners: false
